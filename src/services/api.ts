@@ -531,6 +531,8 @@ class ApiService {
   async getAllMaterials(filters?: MaterialsFilter): Promise<MaterialsResponse> {
     console.log('🔍 Getting all materials with filters:', filters);
     console.log('🔑 Current token:', this.token ? this.token.substring(0, 20) + '...' : 'No token');
+    console.log('🌐 Base URL:', this.client.defaults.baseURL);
+    console.log('📡 Full URL will be:', `${this.client.defaults.baseURL}/materials/all`);
     
     const response = await this.client.get<MaterialsResponse>(
       '/materials/all',
@@ -552,6 +554,8 @@ class ApiService {
   async getMyMaterials(filters?: MaterialsFilter): Promise<MaterialsResponse> {
     console.log('🔍 Getting my materials with filters:', filters);
     console.log('🔑 Current token:', this.token ? this.token.substring(0, 20) + '...' : 'No token');
+    console.log('🌐 Base URL:', this.client.defaults.baseURL);
+    console.log('📡 Full URL will be:', `${this.client.defaults.baseURL}/materials/my`);
     
     try {
       const response = await this.client.get<MaterialsResponse>(
