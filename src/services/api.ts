@@ -284,7 +284,7 @@ class ApiService {
 
   // Placeholders & Profiles (Prompt Config Service)
   async getAllPlaceholders(): Promise<Placeholder[]> {
-    const response = await this.promptConfigClient.get<Placeholder[]>('/api/v1/placeholders');
+    const response = await this.promptConfigClient.get<Placeholder[]>('/v1/placeholders');
     return response.data;
   }
 
@@ -302,7 +302,7 @@ class ApiService {
       
       // Use real endpoint to get user placeholders
       // This will automatically create user in prompt-config-service if it doesn't exist
-      const response = await this.promptConfigClient.get(`/api/v1/users/${userId}/placeholders`);
+      const response = await this.promptConfigClient.get(`/v1/users/${userId}/placeholders`);
       return response.data;
     } catch (error: any) {
       // Don't interrupt authentication if prompt-config-service is unavailable
@@ -312,10 +312,24 @@ class ApiService {
   }
 
   async getUserPlaceholders(userId: string): Promise<UserPlaceholderSettings> {
+    try {
     const response = await this.promptConfigClient.get<UserPlaceholderSettings>(
-      `/api/v1/users/${userId}/placeholders`
+      `/v1/users/${userId}/placeholders`
     );
-    return response.data;
+      return response.data;
+    } catch (error: any) {
+      console.error('❌ Error getting user placeholders:', error);
+      // Return empty settings if user doesn't exist or service is unavailable
+      if (error.status === 404 || error.status === 500) {
+        console.log('🔄 Returning empty placeholder settings...');
+        return {
+          placeholders: {},
+          active_profile_id: null,
+          active_profile_name: null
+        };
+      }
+      throw error;
+    }
   }
 
   async updateUserPlaceholder(
@@ -324,34 +338,34 @@ class ApiService {
     valueId: string
   ): Promise<void> {
     await this.promptConfigClient.put(
-      `/api/v1/users/${userId}/placeholders/${placeholderId}`,
+      `/v1/users/${userId}/placeholders/${placeholderId}`,
       { value_id: valueId }
     );
   }
 
   async applyProfile(userId: string, profileId: string): Promise<UserPlaceholderSettings> {
     const response = await this.promptConfigClient.post<UserPlaceholderSettings>(
-      `/api/v1/users/${userId}/apply-profile/${profileId}`
+      `/v1/users/${userId}/apply-profile/${profileId}`
     );
     return response.data;
   }
 
   async resetUserSettings(userId: string): Promise<UserPlaceholderSettings> {
     const response = await this.promptConfigClient.post<UserPlaceholderSettings>(
-      `/api/v1/users/${userId}/reset`
+      `/v1/users/${userId}/reset`
     );
     return response.data;
   }
 
   async getProfiles(category?: string): Promise<Profile[]> {
-    const response = await this.promptConfigClient.get<Profile[]>('/api/v1/profiles', {
+    const response = await this.promptConfigClient.get<Profile[]>('/v1/profiles', {
       params: category ? { category } : undefined,
     });
     return response.data;
   }
 
   async getProfile(profileId: string): Promise<Profile> {
-    const response = await this.promptConfigClient.get<Profile>(`/api/v1/profiles/${profileId}`);
+    const response = await this.promptConfigClient.get<Profile>(`/v1/profiles/${profileId}`);
     return response.data;
   }
 
@@ -539,21 +553,31 @@ class ApiService {
     console.log('🔍 Getting my materials with filters:', filters);
     console.log('🔑 Current token:', this.token ? this.token.substring(0, 20) + '...' : 'No token');
     
-    const response = await this.client.get<MaterialsResponse>(
-      '/materials/my',
-      {
-        params: {
-          page: filters?.page,
-          page_size: filters?.page_size,
-          subject: filters?.subject,
-          grade: filters?.grade,
-          status: filters?.status,
+    try {
+      const response = await this.client.get<MaterialsResponse>(
+        '/materials/my',
+        {
+          params: {
+            page: filters?.page,
+            page_size: filters?.page_size,
+            subject: filters?.subject,
+            grade: filters?.grade,
+            status: filters?.status,
+          }
         }
+      );
+      
+      console.log('📦 My materials response:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('❌ Error getting my materials:', error);
+      // Fallback to getAllMaterials if my materials endpoint is not available
+      if (error.status === 404) {
+        console.log('🔄 Falling back to getAllMaterials...');
+        return await this.getAllMaterials(filters);
       }
-    );
-    
-    console.log('📦 My materials response:', response.data);
-    return response.data;
+      throw error;
+    }
   }
 
   async getMaterial(materialId: string, includeContent: boolean = true): Promise<Material> {
