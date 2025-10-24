@@ -19,11 +19,6 @@ export default defineConfig({
         changeOrigin: true,
         // No rewrite, backend expects /api/upload-images
       },
-      '/api/state': {
-        target: 'http://147.93.144.61:8001',
-        changeOrigin: true,
-        // No rewrite, backend expects /api/state
-      },
       '/api/hitl': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,
