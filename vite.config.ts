@@ -24,11 +24,10 @@ export default defineConfig({
         changeOrigin: true,
         // No rewrite, backend expects /api/hitl
       },
-      // Materials API - with rewrite (backend expects /materials/*)
+      // Materials API - NO rewrite (backend expects /api/materials/*)
       '/api/materials': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
       },
       // Threads API - session files (with rewrite, backend expects /threads/*)
       '/api/threads': {
