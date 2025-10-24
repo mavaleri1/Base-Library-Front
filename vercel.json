@@ -1,0 +1,20 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "http://147.93.144.61:8001/api/$1"
+    }
+  ],
+  "env": {
+    "VITE_API_BASE_URL": "http://147.93.144.61:8001/api",
+    "VITE_PROMPT_CONFIG_API_URL": "http://147.93.144.61:8002",
+    "VITE_ENABLE_WEBSOCKET": "true",
+    "VITE_ENABLE_EXPORT": "true",
+    "VITE_WALLETCONNECT_PROJECT_ID": "3dc052b5-73b6-4318-9b1b-0da64f2d3ca8",
+    "VITE_ONCHAINKIT_API_KEY": "idlt1CVfj7Cf8UGCUFs0zJxzyjWm8kO3",
+    "VITE_MATERIAL_NFT_CONTRACT": "0xd40cf2739e48d3eaeef60f296f70b915fdd8f3fbe"
+  }
+}
