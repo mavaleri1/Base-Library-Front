@@ -284,7 +284,7 @@ class ApiService {
 
   // Placeholders & Profiles (Prompt Config Service)
   async getAllPlaceholders(): Promise<Placeholder[]> {
-    const response = await this.promptConfigClient.get<Placeholder[]>('/placeholders');
+    const response = await this.promptConfigClient.get<Placeholder[]>('/v1/placeholders');
     return response.data;
   }
 
@@ -302,7 +302,7 @@ class ApiService {
       
       // Use real endpoint to get user placeholders
       // This will automatically create user in prompt-config-service if it doesn't exist
-      const response = await this.promptConfigClient.get(`/users/${userId}/placeholders`);
+      const response = await this.promptConfigClient.get(`/v1/users/${userId}/placeholders`);
       return response.data;
     } catch (error: any) {
       // Don't interrupt authentication if prompt-config-service is unavailable
@@ -314,7 +314,7 @@ class ApiService {
   async getUserPlaceholders(userId: string): Promise<UserPlaceholderSettings> {
     try {
     const response = await this.promptConfigClient.get<UserPlaceholderSettings>(
-      `/users/${userId}/placeholders`
+      `/v1/users/${userId}/placeholders`
     );
       return response.data;
     } catch (error: any) {
@@ -338,34 +338,34 @@ class ApiService {
     valueId: string
   ): Promise<void> {
     await this.promptConfigClient.put(
-      `/users/${userId}/placeholders/${placeholderId}`,
+      `/v1/users/${userId}/placeholders/${placeholderId}`,
       { value_id: valueId }
     );
   }
 
   async applyProfile(userId: string, profileId: string): Promise<UserPlaceholderSettings> {
     const response = await this.promptConfigClient.post<UserPlaceholderSettings>(
-      `/users/${userId}/apply-profile/${profileId}`
+      `/v1/users/${userId}/apply-profile/${profileId}`
     );
     return response.data;
   }
 
   async resetUserSettings(userId: string): Promise<UserPlaceholderSettings> {
     const response = await this.promptConfigClient.post<UserPlaceholderSettings>(
-      `/users/${userId}/reset`
+      `/v1/users/${userId}/reset`
     );
     return response.data;
   }
 
   async getProfiles(category?: string): Promise<Profile[]> {
-    const response = await this.promptConfigClient.get<Profile[]>('/profiles', {
+    const response = await this.promptConfigClient.get<Profile[]>('/v1/profiles', {
       params: category ? { category } : undefined,
     });
     return response.data;
   }
 
   async getProfile(profileId: string): Promise<Profile> {
-    const response = await this.promptConfigClient.get<Profile>(`/profiles/${profileId}`);
+    const response = await this.promptConfigClient.get<Profile>(`/v1/profiles/${profileId}`);
     return response.data;
   }
 
