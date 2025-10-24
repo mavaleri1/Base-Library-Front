@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useWeb3Auth, Web3AuthErrorType } from '../../hooks/useWeb3Auth';
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui';
 import { Web3WalletButton } from './Web3WalletButton';
-import { Wallet, CheckCircle, AlertCircle, Clock, Shield, UserPlus } from 'lucide-react';
+import { CheckCircle, AlertCircle, Clock, Shield, UserPlus } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();

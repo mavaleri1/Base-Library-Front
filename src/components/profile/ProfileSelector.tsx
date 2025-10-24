@@ -49,7 +49,7 @@ export const ProfileSelector: React.FC<ProfileSelectorProps> = ({
           <Button
             variant={isActive ? 'secondary' : 'primary'}
             size="sm"
-            fullWidth
+            className="w-full"
             onClick={() => onApply(profile.id)}
             disabled={isActive || isApplying}
           >

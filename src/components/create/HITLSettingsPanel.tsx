@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, Checkbox, Button } from '../ui';
 import { Settings2, RefreshCw } from 'lucide-react';
 import { api } from '../../services/api';

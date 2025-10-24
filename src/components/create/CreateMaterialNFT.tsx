@@ -89,11 +89,15 @@ export const CreateMaterialNFT: React.FC<CreateMaterialNFTProps> = ({
 
       // 2. sync with back 
       const material = await api.createMaterialWithNFT({
-        title: formData.title,
-        subject: formData.subject,
-        grade: formData.grade,
-        topic: formData.topic,
-        content: formData.content,
+        question: formData.topic,
+        settings: {
+          difficulty: formData.grade.toLowerCase() as 'beginner' | 'intermediate' | 'advanced',
+          subject: formData.subject,
+          volume: 'standard' as const,
+          enableHITL: false,
+          enableEditing: false,
+          enableGapQuestions: false
+        },
         ipfsCid: nftResult.ipfsCid,
         contentHash: nftResult.contentHash,
         txHash: nftResult.txHash,
@@ -136,14 +140,13 @@ export const CreateMaterialNFT: React.FC<CreateMaterialNFTProps> = ({
               </label>
               <Select
                 value={formData.subject}
-                onChange={(e) => handleInputChange('subject', e.target.value)}
+                onChange={(e) => handleInputChange('subject', e)}
                 required
-              >
-                <option value="">Select subject</option>
-                {SUBJECTS.map(subject => (
-                  <option key={subject} value={subject}>{subject}</option>
-                ))}
-              </Select>
+                options={[
+                  { value: '', label: 'Select subject' },
+                  ...SUBJECTS.map(subject => ({ value: subject, label: subject }))
+                ]}
+              />
             </div>
 
             <div>
@@ -152,14 +155,13 @@ export const CreateMaterialNFT: React.FC<CreateMaterialNFTProps> = ({
               </label>
               <Select
                 value={formData.grade}
-                onChange={(e) => handleInputChange('grade', e.target.value)}
+                onChange={(e) => handleInputChange('grade', e)}
                 required
-              >
-                <option value="">Select difficulty level</option>
-                {GRADES.map(grade => (
-                  <option key={grade} value={grade}>{grade}</option>
-                ))}
-              </Select>
+                options={[
+                  { value: '', label: 'Select difficulty level' },
+                  ...GRADES.map(grade => ({ value: grade, label: grade }))
+                ]}
+              />
             </div>
 
             <div>

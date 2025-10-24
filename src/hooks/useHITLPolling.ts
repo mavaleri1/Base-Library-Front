@@ -34,7 +34,7 @@ export const useHITLPolling = ({
   
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const isMountedRef = useRef(true);
-  const previousStatusRef = useRef<string | undefined>();
+  const previousStatusRef = useRef<string | undefined>(undefined);
 
   const stopPolling = useCallback(() => {
     if (intervalRef.current) {

@@ -137,10 +137,6 @@ export const ProfilePage: React.FC = () => {
     );
   }
 
-  const formatWalletAddress = (address: string) => {
-    if (address.length <= 13) return address;
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6 animate-fade-in">

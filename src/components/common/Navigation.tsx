@@ -36,9 +36,6 @@ export const Navigation: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-white font-bold text-sm">LF</span>
-            </div>
             <span className="font-bold text-ink text-lg">Base Library</span>
           </Link>
 
