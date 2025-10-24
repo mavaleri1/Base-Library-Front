@@ -2,42 +2,15 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "rewrites": [
     {
-      "source": "/api/auth/(.*)",
-      "destination": "http://147.93.144.61:8001/api/auth/$1"
-    },
-    {
-      "source": "/api/state/(.*)",
-      "destination": "http://147.93.144.61:8001/api/state/$1"
-    },
-    {
-      "source": "/api/threads/(.*)",
-      "destination": "http://147.93.144.61:8001/api/threads/$1"
-    },
-    {
-      "source": "/api/users/(.*)",
-      "destination": "http://147.93.144.61:8001/api/users/$1"
-    },
-    {
-      "source": "/api/materials/(.*)",
-      "destination": "http://147.93.144.61:8001/api/materials/$1"
-    },
-    {
-      "source": "/api/process",
-      "destination": "http://147.93.144.61:8001/api/process"
-    },
-    {
-      "source": "/api/upload-images",
-      "destination": "http://147.93.144.61:8001/api/upload-images"
-    },
-    {
-      "source": "/api/hitl/(.*)",
-      "destination": "http://147.93.144.61:8001/api/hitl/$1"
-    },
-    {
-      "source": "/api/v1/(.*)",
-      "destination": "http://147.93.144.61:8002/api/v1/$1"
+      "source": "/api/(.*)",
+      "destination": "/api/proxy.ts"
     }
   ],
   "env": {
