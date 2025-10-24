@@ -47,17 +47,17 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      // State API - processing status (with rewrite, backend expects /state/*)
+      '/api/state': {
+        target: 'http://147.93.144.61:8001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
       // Prompt Config Service - user profiles and settings
       '/api/v1': {
         target: 'http://147.93.144.61:8002',
         changeOrigin: true,
         // No rewrite, backend expects /api/v1/*
-      },
-      // Artifacts Service - other endpoints (with rewrite)
-      '/api': {
-        target: 'http://147.93.144.61:8001',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
