@@ -40,9 +40,20 @@ class ApiService {
 
   constructor() {
     // Use environment variables for URL configuration
-    const baseURL = String(import.meta.env.VITE_API_BASE_URL || '/api');
-    const promptConfigURL = String(import.meta.env.VITE_PROMPT_CONFIG_API_URL || 'http://147.93.144.61:8002');
+    // In development: use /api (proxy)
+    // In production: use direct backend URL
+    const isProduction = import.meta.env.MODE === 'production';
+    const baseURL = isProduction 
+      ? 'http://147.93.144.61:8001' 
+      : (import.meta.env.VITE_API_BASE_URL || '/api');
+    const promptConfigURL = isProduction
+      ? 'http://147.93.144.61:8002'
+      : String(import.meta.env.VITE_PROMPT_CONFIG_API_URL || 'http://147.93.144.61:8002');
     
+    
+    console.log('🔧 API Service initialized with baseURL:', baseURL);
+    console.log('🔧 Environment:', import.meta.env.MODE);
+    console.log('🔧 Is Production:', isProduction);
     
     this.client = axios.create({
       baseURL,
