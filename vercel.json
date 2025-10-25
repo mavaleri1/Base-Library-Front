@@ -21,7 +21,7 @@
     },
     {
       "source": "/api/materials/(.*)",
-      "destination": "http://147.93.144.61:8001/materials/$1"
+      "destination": "http://147.93.144.61:8001/api/materials/$1"
     },
     {
       "source": "/api/materials/my",
