@@ -3,6 +3,7 @@ import { Web3Provider } from './contexts/Web3Provider';
 import { AuthProvider } from './contexts/AuthContext';
 import { Layout } from './components/common/Layout';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { LoginPage } from './components/auth/LoginPage';
 import { RegisterPage } from './components/auth/RegisterPage';
 import { RegistryPage } from './components/materials/RegistryPage';
@@ -16,9 +17,10 @@ import LandingPage from './components/LandingPage';
 
 function App() {
   return (
-    <Web3Provider>
-      <AuthProvider>
-        <BrowserRouter>
+    <ErrorBoundary>
+      <Web3Provider>
+        <AuthProvider>
+          <BrowserRouter>
         <Routes>
           {/* Landing Page */}
           <Route path="/" element={<LandingPage />} />
@@ -156,6 +158,7 @@ function App() {
       </BrowserRouter>
       </AuthProvider>
     </Web3Provider>
+    </ErrorBoundary>
   );
 }
 

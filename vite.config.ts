@@ -66,7 +66,7 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 1000,
     target: 'esnext',
     minify: 'esbuild'
   },
