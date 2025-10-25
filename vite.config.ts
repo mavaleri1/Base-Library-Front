@@ -17,7 +17,7 @@ export default defineConfig({
       '/api/upload-images': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,
-        // No rewrite, backend expects /api/upload-images
+        // No rewrite, backend expects /api/upload-images test
       },
       '/api/hitl': {
         target: 'http://147.93.144.61:8001',
