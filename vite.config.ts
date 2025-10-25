@@ -4,6 +4,20 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-navigation-menu', '@radix-ui/react-progress', '@radix-ui/react-tabs', '@radix-ui/react-toast'],
+          web3: ['wagmi', 'viem', '@coinbase/onchainkit'],
+          utils: ['axios', 'clsx', 'tailwind-merge', 'valtio']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
+  },
   server: {
     host: true,
     port: 3001,

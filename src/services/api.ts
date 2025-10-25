@@ -289,7 +289,7 @@ class ApiService {
 
   // Placeholders & Profiles (Prompt Config Service)
   async getAllPlaceholders(): Promise<Placeholder[]> {
-    const response = await this.promptConfigClient.get<Placeholder[]>('/v1/placeholders');
+    const response = await this.promptConfigClient.get<Placeholder[]>('/placeholders');
     return response.data;
   }
 
@@ -363,14 +363,14 @@ class ApiService {
   }
 
   async getProfiles(category?: string): Promise<Profile[]> {
-    const response = await this.promptConfigClient.get<Profile[]>('/v1/profiles', {
+    const response = await this.promptConfigClient.get<Profile[]>('/profiles', {
       params: category ? { category } : undefined,
     });
     return response.data;
   }
 
   async getProfile(profileId: string): Promise<Profile> {
-    const response = await this.promptConfigClient.get<Profile>(`/v1/profiles/${profileId}`);
+    const response = await this.promptConfigClient.get<Profile>(`/profiles/${profileId}`);
     return response.data;
   }
 
