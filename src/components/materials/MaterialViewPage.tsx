@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent, Button } from '../ui';
 import { ArrowLeft, Loader2, Download, FileText, BookOpen, HelpCircle, FileCheck, ChevronDown, ChevronRight } from 'lucide-react';
-import { MarkdownViewer } from '../common';
+import { LazyMarkdownViewer } from '../common';
 import { MaterialNFTMint } from './MaterialNFTMint';
 import { api } from '../../services/api';
 import type { Session, Material } from '../../types';
@@ -515,7 +515,7 @@ export const MaterialViewPage: React.FC = () => {
             </CardHeader>
             {!isSectionCollapsed(material.fileName) && (
               <CardContent className="p-8">
-                <MarkdownViewer content={material.content} />
+                <LazyMarkdownViewer content={material.content} />
               </CardContent>
             )}
           </Card>

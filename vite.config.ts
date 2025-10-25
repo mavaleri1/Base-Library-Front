@@ -20,21 +20,44 @@ export default defineConfig({
           if (id.includes('@radix-ui')) {
             return 'ui-components';
           }
-          // Web3 libraries
-          if (id.includes('wagmi') || id.includes('viem') || id.includes('@coinbase/onchainkit')) {
-            return 'web3';
+          // Web3 libraries - split into smaller chunks
+          if (id.includes('wagmi')) {
+            return 'wagmi';
+          }
+          if (id.includes('viem')) {
+            return 'viem';
+          }
+          if (id.includes('@coinbase/onchainkit')) {
+            return 'onchainkit';
           }
           // Markdown and syntax highlighting
-          if (id.includes('react-markdown') || id.includes('react-syntax-highlighter') || id.includes('katex')) {
+          if (id.includes('react-markdown') || id.includes('react-syntax-highlighter')) {
             return 'markdown';
+          }
+          if (id.includes('katex') || id.includes('rehype-katex') || id.includes('remark-math')) {
+            return 'math';
           }
           // IPFS and file handling
           if (id.includes('ipfs-http-client')) {
             return 'ipfs';
           }
           // Utility libraries
-          if (id.includes('axios') || id.includes('clsx') || id.includes('tailwind-merge') || id.includes('valtio')) {
+          if (id.includes('axios')) {
+            return 'axios';
+          }
+          if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
             return 'utils';
+          }
+          if (id.includes('valtio')) {
+            return 'valtio';
+          }
+          // TanStack Query
+          if (id.includes('@tanstack')) {
+            return 'tanstack';
+          }
+          // Lucide icons
+          if (id.includes('lucide-react')) {
+            return 'icons';
           }
           // Large dependencies
           if (id.includes('node_modules')) {
@@ -43,7 +66,11 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 2000
+    chunkSizeWarningLimit: 1000,
+    target: 'esnext',
+    minify: 'esbuild',
+    cssCodeSplit: true,
+    sourcemap: false
   },
   server: {
     host: true,

@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/proxy.js": {
-      "runtime": "@vercel/edge@1.0.0"
+      "runtime": "edge"
     }
   },
   "rewrites": [
@@ -10,6 +10,9 @@
       "destination": "/api/proxy.js"
     }
   ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
   "env": {
     "VITE_API_BASE_URL": "/api",
     "VITE_PROMPT_CONFIG_API_URL": "/api/v1",
