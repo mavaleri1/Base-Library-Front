@@ -19,13 +19,13 @@ const LandingPage: React.FC = () => {
   };
 
   const handleLitepaper = () => {
-    // Here you can add logic to open the litepaper
-    console.log('Opening litepaper...');
+    // Open the litepaper PDF file
+    window.open('/Litepaper.pdf', '_blank');
   };
 
   const handleDocs = () => {
-    // Here you can add logic to open the documentation
-    console.log('Opening docs...');
+    // Open documentation in a new tab
+    window.open('http://147.93.144.61/', '_blank');
   };
 
   useEffect(() => {
