@@ -40,8 +40,8 @@
       "destination": "http://147.93.144.61:8001/hitl/$1"
     },
     {
-      "source": "/api/v1/(.*)",
-      "destination": "http://147.93.144.61:8002/$1"
+      "source": "/api/v1/v1/(.*)",
+      "destination": "http://147.93.144.61:8002/api/v1/$1"
     }
   ],
   "env": {
