@@ -7,16 +7,43 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-navigation-menu', '@radix-ui/react-progress', '@radix-ui/react-tabs', '@radix-ui/react-toast'],
-          web3: ['wagmi', 'viem', '@coinbase/onchainkit'],
-          utils: ['axios', 'clsx', 'tailwind-merge', 'valtio']
+        manualChunks: (id) => {
+          // React and core libraries
+          if (id.includes('react') || id.includes('react-dom')) {
+            return 'react-vendor';
+          }
+          // Router
+          if (id.includes('react-router')) {
+            return 'router';
+          }
+          // Radix UI components
+          if (id.includes('@radix-ui')) {
+            return 'ui-components';
+          }
+          // Web3 libraries
+          if (id.includes('wagmi') || id.includes('viem') || id.includes('@coinbase/onchainkit')) {
+            return 'web3';
+          }
+          // Markdown and syntax highlighting
+          if (id.includes('react-markdown') || id.includes('react-syntax-highlighter') || id.includes('katex')) {
+            return 'markdown';
+          }
+          // IPFS and file handling
+          if (id.includes('ipfs-http-client')) {
+            return 'ipfs';
+          }
+          // Utility libraries
+          if (id.includes('axios') || id.includes('clsx') || id.includes('tailwind-merge') || id.includes('valtio')) {
+            return 'utils';
+          }
+          // Large dependencies
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         }
       }
     },
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 2000
   },
   server: {
     host: true,

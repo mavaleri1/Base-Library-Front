@@ -1,5 +1,4 @@
 {
-  "version": 2,
   "functions": {
     "api/proxy.js": {
       "runtime": "@vercel/edge@1.0.0"
