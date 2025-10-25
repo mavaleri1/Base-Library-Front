@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import {
   ConnectWallet,
@@ -23,6 +23,7 @@ export const Web3WalletButton: React.FC<Web3WalletButtonProps> = ({
   align = 'center',
 }) => {
   const { address, isConnected } = useAccount();
+  const [hasError, setHasError] = useState(false);
 
   // track the connection of the wallet (only notify about the connection)
   useEffect(() => {
@@ -30,6 +31,19 @@ export const Web3WalletButton: React.FC<Web3WalletButtonProps> = ({
       onConnect?.(address);
     }
   }, [isConnected, address, onConnect]);
+
+  // Handle Web3 errors
+  useEffect(() => {
+    const handleError = (error: ErrorEvent) => {
+      if (error.message.includes('ethereum') || error.message.includes('viem')) {
+        console.warn('Web3 error caught:', error.message);
+        setHasError(true);
+      }
+    };
+
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
 
   const getJustifyClass = () => {
     switch (align) {
@@ -42,6 +56,19 @@ export const Web3WalletButton: React.FC<Web3WalletButtonProps> = ({
         return 'justify-center';
     }
   };
+
+  if (hasError) {
+    return (
+      <div className={`w-full flex ${getJustifyClass()}`}>
+        <button 
+          className="w-full bg-gray-500 text-white rounded-lg font-medium py-2 px-4 cursor-not-allowed"
+          disabled
+        >
+          Web3 Unavailable
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={`w-full flex ${getJustifyClass()}`}>
