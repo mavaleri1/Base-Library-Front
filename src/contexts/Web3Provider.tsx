@@ -21,17 +21,23 @@ interface Web3ProviderProps {
 export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
   useEffect(() => {
     // Handle Web3 provider conflicts
-    const handleProviderError = (error: Error) => {
+    const handleError = (event: ErrorEvent) => {
+      const error = event.error || new Error(event.message || 'Unknown error');
       console.warn('Web3 provider error:', error);
     };
 
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      const error = event.reason instanceof Error ? event.reason : new Error(String(event.reason));
+      console.warn('Web3 unhandled rejection:', error);
+    };
+
     // Add error boundary for Web3
-    window.addEventListener('error', handleProviderError);
-    window.addEventListener('unhandledrejection', handleProviderError);
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
 
     return () => {
-      window.removeEventListener('error', handleProviderError);
-      window.removeEventListener('unhandledrejection', handleProviderError);
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
     };
   }, []);
 
