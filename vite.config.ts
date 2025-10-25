@@ -8,47 +8,47 @@ export default defineConfig({
     host: true,
     port: 3001,
     proxy: {
-      // Artifacts Service - material generation
+      // Artifacts Service - material generation (without /api prefix)
       '/api/process': {
-        target: 'http://147.93.144.61:8001',
-        changeOrigin: true,
-        // No rewrite, backend expects /api/process
-      },
-      '/api/upload-images': {
-        target: 'http://147.93.144.61:8001',
-        changeOrigin: true,
-        // No rewrite, backend expects /api/upload-images
-      },
-      '/api/hitl': {
-        target: 'http://147.93.144.61:8001',
-        changeOrigin: true,
-        // No rewrite, backend expects /api/hitl
-      },
-      // Materials API - with rewrite (backend expects /materials/*)
-      '/api/materials': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      // Threads API - session files (with rewrite, backend expects /threads/*)
+      '/api/upload-images': {
+        target: 'http://147.93.144.61:8001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+      '/api/hitl': {
+        target: 'http://147.93.144.61:8001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+      // Materials API - backend expects /api/materials/*
+      '/api/materials': {
+        target: 'http://147.93.144.61:8001',
+        changeOrigin: true,
+        // No rewrite, backend expects /api/materials/*
+      },
+      // Threads API - backend expects /threads/* (without /api prefix)
       '/api/threads': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      // Users API - user sessions (with rewrite, backend expects /users/*)
+      // Users API - backend expects /users/* (without /api prefix)
       '/api/users': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      // Auth API - authorization (with rewrite, backend expects /auth/*)
+      // Auth API - backend expects /auth/* (without /api prefix)
       '/api/auth': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      // State API - processing status (with rewrite, backend expects /state/*)
+      // State API - backend expects /state/* (without /api prefix)
       '/api/state': {
         target: 'http://147.93.144.61:8001',
         changeOrigin: true,

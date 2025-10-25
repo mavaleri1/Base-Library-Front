@@ -2,12 +2,11 @@ export default async function handler(request) {
   const url = new URL(request.url);
   const path = url.pathname;
   
-  // Определяем целевой сервер на основе пути
   let targetUrl;
   if (path.startsWith('/api/v1/')) {
     targetUrl = `http://147.93.144.61:8002${path}`;
   } else {
-    targetUrl = `http://147.93.144.61:8001${path}`;
+    targetUrl = `http://147.93.144.61:8001/api${path}`;
   }
   
   try {
