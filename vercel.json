@@ -1,8 +1,44 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/proxy.js"
+      "source": "/api/auth/(.*)",
+      "destination": "http://147.93.144.61:8001/auth/$1"
+    },
+    {
+      "source": "/api/state/(.*)",
+      "destination": "http://147.93.144.61:8001/state/$1"
+    },
+    {
+      "source": "/api/threads/(.*)",
+      "destination": "http://147.93.144.61:8001/threads/$1"
+    },
+    {
+      "source": "/api/users/(.*)",
+      "destination": "http://147.93.144.61:8001/users/$1"
+    },
+    {
+      "source": "/api/materials/(.*)",
+      "destination": "http://147.93.144.61:8001/api/materials/$1"
+    },
+    {
+      "source": "/api/materials/my",
+      "destination": "http://147.93.144.61:8001/api/materials/my"
+    },
+    {
+      "source": "/api/process",
+      "destination": "http://147.93.144.61:8001/process"
+    },
+    {
+      "source": "/api/upload-images",
+      "destination": "http://147.93.144.61:8001/upload-images"
+    },
+    {
+      "source": "/api/hitl/(.*)",
+      "destination": "http://147.93.144.61:8001/hitl/$1"
+    },
+    {
+      "source": "/api/v1/(.*)",
+      "destination": "http://147.93.144.61:8002/api/v1/$1"
     }
   ],
   "env": {

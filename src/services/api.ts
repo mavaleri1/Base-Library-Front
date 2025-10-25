@@ -307,7 +307,7 @@ class ApiService {
       
       // Use real endpoint to get user placeholders
       // This will automatically create user in prompt-config-service if it doesn't exist
-      const response = await this.promptConfigClient.get(`/v1/users/${userId}/placeholders`);
+      const response = await this.promptConfigClient.get(`/users/${userId}/placeholders`);
       return response.data;
     } catch (error: any) {
       // Don't interrupt authentication if prompt-config-service is unavailable
@@ -319,7 +319,7 @@ class ApiService {
   async getUserPlaceholders(userId: string): Promise<UserPlaceholderSettings> {
     try {
     const response = await this.promptConfigClient.get<UserPlaceholderSettings>(
-      `/v1/users/${userId}/placeholders`
+      `/users/${userId}/placeholders`
     );
       return response.data;
     } catch (error: any) {
@@ -343,21 +343,21 @@ class ApiService {
     valueId: string
   ): Promise<void> {
     await this.promptConfigClient.put(
-      `/v1/users/${userId}/placeholders/${placeholderId}`,
+      `/users/${userId}/placeholders/${placeholderId}`,
       { value_id: valueId }
     );
   }
 
   async applyProfile(userId: string, profileId: string): Promise<UserPlaceholderSettings> {
     const response = await this.promptConfigClient.post<UserPlaceholderSettings>(
-      `/v1/users/${userId}/apply-profile/${profileId}`
+      `/users/${userId}/apply-profile/${profileId}`
     );
     return response.data;
   }
 
   async resetUserSettings(userId: string): Promise<UserPlaceholderSettings> {
     const response = await this.promptConfigClient.post<UserPlaceholderSettings>(
-      `/v1/users/${userId}/reset`
+      `/users/${userId}/reset`
     );
     return response.data;
   }
