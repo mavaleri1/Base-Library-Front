@@ -41,7 +41,7 @@
     },
     {
       "source": "/api/v1/(.*)",
-      "destination": "http://147.93.144.61:8002/v1/$1"
+      "destination": "http://147.93.144.61:8002/$1"
     }
   ],
   "env": {
