@@ -1,6 +1,5 @@
-export default async function handler(request) {
-  const url = new URL(request.url);
-  const path = url.pathname;
+export default async function handler(req, res) {
+  const path = req.url;
   
   let targetUrl;
   if (path.startsWith('/api/v1/')) {
@@ -11,32 +10,24 @@ export default async function handler(request) {
   
   try {
     const response = await fetch(targetUrl, {
-      method: request.method,
+      method: req.method,
       headers: {
-        ...Object.fromEntries(request.headers.entries()),
+        ...req.headers,
         host: undefined,
       },
-      body: request.method !== 'GET' && request.method !== 'HEAD' ? await request.text() : undefined,
+      body: req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body) : undefined,
     });
     
     const data = await response.text();
     
-    return new Response(data, {
-      status: response.status,
-      headers: {
-        'Content-Type': response.headers.get('content-type') || 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
-    });
+    res.setHeader('Content-Type', response.headers.get('content-type') || 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    
+    res.status(response.status).send(data);
   } catch (error) {
     console.error('Proxy error:', error);
-    return new Response(JSON.stringify({ error: 'Proxy error' }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    res.status(500).json({ error: 'Proxy error' });
   }
 }

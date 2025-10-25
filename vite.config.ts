@@ -66,11 +66,9 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
     target: 'esnext',
-    minify: 'esbuild',
-    cssCodeSplit: true,
-    sourcemap: false
+    minify: 'esbuild'
   },
   server: {
     host: true,
