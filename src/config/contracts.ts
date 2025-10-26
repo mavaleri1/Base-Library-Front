@@ -5,9 +5,13 @@ const rawContractAddress = import.meta.env.VITE_MATERIAL_NFT_CONTRACT || "0xd40c
 console.log('🔍 Debug - Raw env variable:', JSON.stringify(import.meta.env.VITE_MATERIAL_NFT_CONTRACT));
 console.log('🔍 Debug - Raw contract address:', JSON.stringify(rawContractAddress));
 
+// Clean the address from any non-printable characters
+const cleanContractAddress = String(rawContractAddress).replace(/[\x00-\x1F\x7F-\x9F]/g, '').trim().toLowerCase();
+console.log('🔍 Debug - Clean contract address:', JSON.stringify(cleanContractAddress));
+
 export const CONTRACTS = {
   MaterialNFT: {
-    address: rawContractAddress.trim().toLowerCase(),
+    address: cleanContractAddress,
     abi: [
       {
         "inputs": [
@@ -190,8 +194,8 @@ export const validateContractAddress = (address: string | undefined): string => 
     throw new Error('MaterialNFT contract address is not set. Check VITE_MATERIAL_NFT_CONTRACT variable in .env file.');
   }
   
-  // Trim whitespace and convert to lowercase for validation
-  const cleanAddress = address.trim().toLowerCase();
+  // Remove all non-printable characters and trim whitespace
+  const cleanAddress = address.replace(/[\x00-\x1F\x7F-\x9F]/g, '').trim().toLowerCase();
   console.log('🔍 Debug - Clean address:', JSON.stringify(cleanAddress));
   console.log('🔍 Debug - Clean address length:', cleanAddress.length);
   
@@ -203,6 +207,7 @@ export const validateContractAddress = (address: string | undefined): string => 
   if (!/^0x[a-f0-9]{40}$/.test(cleanAddress)) {
     console.log('🔍 Debug - Regex test failed for:', cleanAddress);
     console.log('🔍 Debug - Regex pattern: /^0x[a-f0-9]{40}$/');
+    console.log('🔍 Debug - Character codes:', Array.from(cleanAddress).map(c => c.charCodeAt(0)));
     throw new Error(`Invalid contract address format: ${address}. Address should be in format 0x... (40 hex characters).`);
   }
   
