@@ -26,7 +26,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({ value, onChange, e
         rows={6}
         className="resize-none placeholder:text-gray-400"
       />
-      
+      {/* {value && (
       <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
         <p className="text-sm text-muted">
           <strong className="text-ink">Tips:</strong>
@@ -38,6 +38,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({ value, onChange, e
           <li>Upload images of notes for more accurate material</li>
         </ul>
       </div>
+      )} */}
     </div>
   );
 };
