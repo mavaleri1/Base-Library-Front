@@ -1,7 +1,7 @@
 // import { base } from "viem/chains"; // Not used in this file
 
 // Smart contracts configuration
-const rawContractAddress = import.meta.env.VITE_MATERIAL_NFT_CONTRACT || "0xd40cf2739e48d3eaef60f296f70b915fdd8f3fbe";
+const rawContractAddress = import.meta.env.VITE_MATERIAL_NFT_CONTRACT || "0xd40cf2739e48d3eaeef60f296f70b915fdd8f3fb";
 console.log('🔍 Debug - Raw env variable:', JSON.stringify(import.meta.env.VITE_MATERIAL_NFT_CONTRACT));
 console.log('🔍 Debug - Raw contract address:', JSON.stringify(rawContractAddress));
 
@@ -207,7 +207,9 @@ export const validateContractAddress = (address: string | undefined): string => 
   if (!/^0x[a-f0-9]{40}$/.test(cleanAddress)) {
     console.log('🔍 Debug - Regex test failed for:', cleanAddress);
     console.log('🔍 Debug - Regex pattern: /^0x[a-f0-9]{40}$/');
-    console.log('🔍 Debug - Character codes:', Array.from(cleanAddress).map(c => c.charCodeAt(0)));
+    console.log('🔍 Debug - Character codes:', Array.from(cleanAddress).map((c, i) => `${i}: ${c.charCodeAt(0)} (${JSON.stringify(c)})`));
+    console.log('🔍 Debug - Expected length: 42, actual length:', cleanAddress.length);
+    console.log('🔍 Debug - Extra character at position 42:', JSON.stringify(cleanAddress[42]));
     throw new Error(`Invalid contract address format: ${address}. Address should be in format 0x... (40 hex characters).`);
   }
   
