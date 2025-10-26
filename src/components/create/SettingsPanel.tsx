@@ -1,8 +1,9 @@
 import React from 'react';
-import { Select, Checkbox, Card, CardHeader, CardTitle, CardContent } from '../ui';
-import { DIFFICULTY_OPTIONS, VOLUME_OPTIONS, SUBJECT_OPTIONS } from '../../utils/constants';
+import { Checkbox, Card, CardHeader, CardTitle, CardContent } from '../ui';
 import type { MaterialSettings } from '../../types';
-import { Settings } from 'lucide-react';
+import { Settings, User, BookOpen, Target, Brain, Globe, Layers } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
+import { useUserPlaceholders } from '../../hooks/useUserPlaceholders';
 
 interface SettingsPanelProps {
   settings: MaterialSettings;
@@ -10,6 +11,9 @@ interface SettingsPanelProps {
 }
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange }) => {
+  const { user } = useAuth();
+  const { placeholders, isLoading, error } = useUserPlaceholders(user?.id || null);
+
   const handleChange = <K extends keyof MaterialSettings>(
     key: K,
     value: MaterialSettings[K]
@@ -20,6 +24,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
     });
   };
 
+  const getPlaceholderValue = (placeholderName: string) => {
+    if (!placeholders?.placeholders) return null;
+    return placeholders.placeholders[placeholderName]?.display_name || null;
+  };
+
   return (
     <Card variant="bordered">
       <CardHeader>
@@ -28,40 +37,98 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
           <CardTitle>Generation Settings</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <Select
-          label="Difficulty Level"
-          options={DIFFICULTY_OPTIONS}
-          value={settings.difficulty}
-          onChange={(value) => handleChange('difficulty', value as MaterialSettings['difficulty'])}
-          hint={
-            DIFFICULTY_OPTIONS.find((opt) => opt.value === settings.difficulty)?.description
-          }
-        />
+      <CardContent className="space-y-6">
+        {/* Current Profile Settings */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <User className="text-primary" size={16} />
+            <h3 className="text-sm font-medium text-ink">Current Profile Settings</h3>
+          </div>
+          
+          {isLoading ? (
+            <div className="text-sm text-muted-foreground">Loading profile settings...</div>
+          ) : error ? (
+            <div className="text-sm text-destructive">Failed to load profile settings</div>
+          ) : placeholders?.placeholders ? (
+            <div className="grid grid-cols-1 gap-3">
+              {/* Expert Role */}
+              {getPlaceholderValue('expert_role') && (
+                <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Brain className="text-primary" size={14} />
+                    <span className="text-sm font-medium">Expert Role</span>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    {getPlaceholderValue('expert_role')}
+                  </span>
+                </div>
+              )}
 
-        <Select
-          label="Subject Area"
-          options={SUBJECT_OPTIONS.map((subject) => ({
-            value: subject,
-            label: subject,
-          }))}
-          value={settings.subject}
-          onChange={(value) => handleChange('subject', value)}
-        />
+              {/* Subject Area */}
+              {getPlaceholderValue('subject_name') && (
+                <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="text-primary" size={14} />
+                    <span className="text-sm font-medium">Subject Area</span>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    {getPlaceholderValue('subject_name')}
+                  </span>
+                </div>
+              )}
 
-        <Select
-          label="Material Volume"
-          options={VOLUME_OPTIONS}
-          value={settings.volume}
-          onChange={(value) => handleChange('volume', value as MaterialSettings['volume'])}
-          hint={VOLUME_OPTIONS.find((opt) => opt.value === settings.volume)?.description}
-        />
+              {/* Target Audience */}
+              {getPlaceholderValue('target_audience_inline') && (
+                <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Target className="text-primary" size={14} />
+                    <span className="text-sm font-medium">Target Audience</span>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    {getPlaceholderValue('target_audience_inline')}
+                  </span>
+                </div>
+              )}
 
-        <div className="border-t border-border pt-4 space-y-3">
+              {/* Writing Style */}
+              {getPlaceholderValue('style') && (
+                <div className="p-3 bg-muted/30 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Layers className="text-primary" size={14} />
+                    <span className="text-sm font-medium">Writing Style</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground break-words">
+                    {getPlaceholderValue('style')}
+                  </div>
+                </div>
+              )}
+
+              {/* Explanation Depth */}
+              {getPlaceholderValue('explanation_depth') && (
+                <div className="p-3 bg-muted/30 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Brain className="text-primary" size={14} />
+                    <span className="text-sm font-medium">Explanation Depth</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground break-words">
+                    {getPlaceholderValue('explanation_depth')}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-sm text-muted-foreground">No profile settings found</div>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-border"></div>
+
+        {/* Additional Options */}
+        <div className="space-y-3">
           <h4 className="text-sm font-medium text-ink">Additional Options</h4>
 
           <Checkbox
-            //#label="Human-in-the-Loop (HITL)"
             label="Refinement Mode"
             description="Ability to edit and refine materials during the process"
             checked={settings.enableHITL}
