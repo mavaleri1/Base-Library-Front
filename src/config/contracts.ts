@@ -1,9 +1,13 @@
 // import { base } from "viem/chains"; // Not used in this file
 
 // Smart contracts configuration
+const rawContractAddress = import.meta.env.VITE_MATERIAL_NFT_CONTRACT || "0xd40cf2739e48d3eaef60f296f70b915fdd8f3fbe";
+console.log('🔍 Debug - Raw env variable:', JSON.stringify(import.meta.env.VITE_MATERIAL_NFT_CONTRACT));
+console.log('🔍 Debug - Raw contract address:', JSON.stringify(rawContractAddress));
+
 export const CONTRACTS = {
   MaterialNFT: {
-    address: (import.meta.env.VITE_MATERIAL_NFT_CONTRACT || "0xd40cf2739e48d3eaef60f296f70b915fdd8f3fbe").trim().toLowerCase(),
+    address: rawContractAddress.trim().toLowerCase(),
     abi: [
       {
         "inputs": [
@@ -178,12 +182,18 @@ export const MaterialNFT_ABI = CONTRACTS.MaterialNFT.abi;
 
 // Contract address validation
 export const validateContractAddress = (address: string | undefined): string => {
+  console.log('🔍 Debug - Raw address:', JSON.stringify(address));
+  console.log('🔍 Debug - Address length:', address?.length);
+  console.log('🔍 Debug - Address type:', typeof address);
+  
   if (!address) {
     throw new Error('MaterialNFT contract address is not set. Check VITE_MATERIAL_NFT_CONTRACT variable in .env file.');
   }
   
   // Trim whitespace and convert to lowercase for validation
   const cleanAddress = address.trim().toLowerCase();
+  console.log('🔍 Debug - Clean address:', JSON.stringify(cleanAddress));
+  console.log('🔍 Debug - Clean address length:', cleanAddress.length);
   
   if (cleanAddress === '0x...') {
     throw new Error('MaterialNFT contract address is not set. Check VITE_MATERIAL_NFT_CONTRACT variable in .env file.');
@@ -191,9 +201,12 @@ export const validateContractAddress = (address: string | undefined): string => 
   
   // Check Ethereum address format
   if (!/^0x[a-f0-9]{40}$/.test(cleanAddress)) {
+    console.log('🔍 Debug - Regex test failed for:', cleanAddress);
+    console.log('🔍 Debug - Regex pattern: /^0x[a-f0-9]{40}$/');
     throw new Error(`Invalid contract address format: ${address}. Address should be in format 0x... (40 hex characters).`);
   }
   
+  console.log('✅ Debug - Address validation passed:', cleanAddress);
   return cleanAddress;
 };
 
