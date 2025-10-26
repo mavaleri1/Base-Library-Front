@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, Card, CardHeader, CardTitle, CardContent } from '../ui';
 import type { MaterialSettings } from '../../types';
-import { Settings, User, BookOpen, Target, Brain, Globe, Layers } from 'lucide-react';
+import { Settings, User, BookOpen, Target, Brain, Layers } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useUserPlaceholders } from '../../hooks/useUserPlaceholders';
 
