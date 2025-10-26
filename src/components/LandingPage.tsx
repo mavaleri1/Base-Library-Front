@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
 
   const handleDocs = () => {
     // Open documentation in a new tab
-    window.open('http://147.93.144.61/', '_blank');
+    window.open('http://147.93.144.61:3000', '_blank');
   };
 
   useEffect(() => {
@@ -71,7 +71,9 @@ const LandingPage: React.FC = () => {
         {/* Navigation Links */}
         <nav className="flex space-x-12">
           <a 
-            href="#" 
+            href="https://github.com/mavaleri1/Base-Library-Backend" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-black hover:text-blue-600 transition-colors duration-200"
             style={{ color: '#000000' }}
             onMouseEnter={(e) => e.currentTarget.style.color = '#0000FF'}
@@ -80,7 +82,9 @@ const LandingPage: React.FC = () => {
             git
           </a>
           <a 
-            href="#" 
+            href="https://x.com/BaseLibraryED" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-black hover:text-blue-600 transition-colors duration-200"
             style={{ color: '#000000' }}
             onMouseEnter={(e) => e.currentTarget.style.color = '#0000FF'}
