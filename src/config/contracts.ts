@@ -3,7 +3,7 @@
 // Smart contracts configuration
 export const CONTRACTS = {
   MaterialNFT: {
-    address: import.meta.env.VITE_MATERIAL_NFT_CONTRACT || "0xd40cf2739e48d3eaef60f296f70b915fdd8f3fbe",
+    address: (import.meta.env.VITE_MATERIAL_NFT_CONTRACT || "0xd40cf2739e48d3eaef60f296f70b915fdd8f3fbe").trim().toLowerCase(),
     abi: [
       {
         "inputs": [
@@ -182,16 +182,19 @@ export const validateContractAddress = (address: string | undefined): string => 
     throw new Error('MaterialNFT contract address is not set. Check VITE_MATERIAL_NFT_CONTRACT variable in .env file.');
   }
   
-  if (address === '0x...') {
+  // Trim whitespace and convert to lowercase for validation
+  const cleanAddress = address.trim().toLowerCase();
+  
+  if (cleanAddress === '0x...') {
     throw new Error('MaterialNFT contract address is not set. Check VITE_MATERIAL_NFT_CONTRACT variable in .env file.');
   }
   
   // Check Ethereum address format
-  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+  if (!/^0x[a-f0-9]{40}$/.test(cleanAddress)) {
     throw new Error(`Invalid contract address format: ${address}. Address should be in format 0x... (40 hex characters).`);
   }
   
-  return address;
+  return cleanAddress;
 };
 
 // Get valid contract address
