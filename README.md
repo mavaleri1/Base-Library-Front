@@ -12,7 +12,7 @@ A comprehensive Web3-enabled educational platform for creating, managing, and mi
 - **Refinement Mode**: Interactive content refinement during generation
 - **Material Management**: Organize materials by subject, grade, and topic
 - **Leaderboard System**: Track top content creators and NFT holders
-- **User Authentication**: Both traditional email/password and Web3 wallet authentication
+- **User Authentication**: Web3 wallet authentication
 
 ### Technical Features
 - **Modern React Architecture**: Built with React 19, TypeScript, and Vite
@@ -61,8 +61,7 @@ Create a `.env` file in the root directory:
 ```env
 # API Configuration
 VITE_API_BASE_URL=/api
-VITE_PROMPT_CONFIG_API_URL=http://147.93.144.61:8002/api/v1
-
+VITE_PROMPT_CONFIG_API_URL=http://localhost:8002/api/v1
 # Web3 Configuration
 VITE_MATERIAL_NFT_CONTRACT=0xd40cf2739e48d3eaef60f296f70b915fdd8f3fbe
 VITE_ONCHAINKIT_API_KEY=your_onchainkit_api_key

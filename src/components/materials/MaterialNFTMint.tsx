@@ -335,9 +335,9 @@ Material NFT
               <p className="text-green-600 font-medium mb-2">
                 NFT successfully minted!
               </p>
-              <p className="text-sm text-muted">
+              {/* <p className="text-sm text-muted">
                 Token ID: #{mintSuccess?.tokenId ?? ownershipCheck.tokenId}
-              </p>
+              </p> */}
             </div>
             
             {mintSuccess && (
@@ -363,8 +363,8 @@ Material NFT
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <span className="text-sm font-medium">IPFS CID:</span>
+                 {/*<div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                 <span className="text-sm font-medium">IPFS CID:</span> 
                   <div className="flex items-center gap-2">
                     <code className="text-xs bg-white px-2 py-1 rounded">
                       {mintSuccess.ipfsCid.slice(0, 10)}...
@@ -376,7 +376,7 @@ Material NFT
                       icon={<Copy size={14} />}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
             )}
           </div>
