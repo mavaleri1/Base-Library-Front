@@ -1,0 +1,34 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "baseBuilder": {
+    "ownerAddress": "0x"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Base Library",
+    "homeUrl": "base-library.site",
+    "iconUrl": "https://base-library.site/logo_without_bg.png",
+    "splashImageUrl": "https://base-library.site/logo_without_bg.png",
+    "splashBackgroundColor": "#ffffff",
+    "webhookUrl": "https://base-library.site/api/webhook",
+    "subtitle": "Intelligent Educational Content Creation System",
+    "description": "Create educational materials for any subject and education level with AI",
+    "screenshotUrls": [
+      "https://base-library.site/screenshots/1.png",
+      "https://base-library.site/screenshots/2.png",
+      "https://base-library.site/screenshots/3.png"
+    ],
+    "primaryCategory": "education",
+    "tags": ["education", "ai", "materials", "learning", "base"],
+    "heroImageUrl": "https://base-library.site/hero.png",
+    "tagline": "Create materials instantly",
+    "ogTitle": "Base Library - Intelligent Educational Content Creation System",
+    "ogDescription": "Create educational materials for any subject and education level with AI",
+    "ogImageUrl": "https://base-library.site/og-image.png",
+    "noindex": false
+  }
+}

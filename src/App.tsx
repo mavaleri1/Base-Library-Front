@@ -13,12 +13,18 @@ import { MaterialsListPage } from './components/materials/MaterialsListPage';
 import { MaterialsDebugPage } from './components/materials/MaterialsDebugPage';
 import { LeaderboardPage } from './components/materials/LeaderboardPage';
 import LandingPage from './components/LandingPage';
+import { useFarcasterSDK } from './hooks/useFarcasterSDK';
+import { FarcasterProvider } from './components/common/FarcasterProvider';
 
 function App() {
+  // init Farcaster SDK
+  useFarcasterSDK();
+
   return (
-    <Web3Provider>
-      <AuthProvider>
-        <BrowserRouter>
+    <FarcasterProvider>
+      <Web3Provider>
+        <AuthProvider>
+          <BrowserRouter>
         <Routes>
           {/* Landing Page */}
           <Route path="/" element={<LandingPage />} />
@@ -153,9 +159,10 @@ function App() {
             }
           />
         </Routes>
-      </BrowserRouter>
-      </AuthProvider>
-    </Web3Provider>
+          </BrowserRouter>
+        </AuthProvider>
+      </Web3Provider>
+    </FarcasterProvider>
   );
 }
 
