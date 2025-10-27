@@ -145,16 +145,24 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
               <h4 className="text-sm font-medium text-ink">Additional Options</h4>
 
               <Checkbox
-                label="Refinement Mode"
+                label="Refinement Mode (beta)"
                 description="Ability to edit and refine materials during the process"
                 checked={settings.enableHITL}
-                onChange={(e) => handleChange('enableHITL', e.target.checked)}
+                onChange={(e) => {
+                  const newValue = e.target.checked;
+                  handleChange('enableHITL', newValue);
+                  //
+                  if (!newValue && settings.enableEditing) {
+                    handleChange('enableEditing', false);
+                  }
+                }}
               />
 
               <Checkbox
                 label="Interactive editing"
                 description="Targeted edits to synthesized material"
                 checked={settings.enableEditing}
+                disabled={!settings.enableHITL}
                 onChange={(e) => handleChange('enableEditing', e.target.checked)}
               />
 
