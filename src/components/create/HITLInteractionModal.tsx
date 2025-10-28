@@ -336,7 +336,7 @@ export const HITLInteractionModal: React.FC<HITLInteractionModalProps> = ({
                 <Textarea
                   value={feedback}
                   onChange={(e) => setFeedback(e.target.value)}
-                  placeholder="For example: 'Add more examples', 'Simplify the explanation', 'Approved', etc."
+                  placeholder="For example: 'Add more examples', 'Simplify the explanation', 'Skipped', etc."
                   rows={4}
                   error={error}
                   disabled={isSubmitting}
@@ -366,13 +366,13 @@ export const HITLInteractionModal: React.FC<HITLInteractionModalProps> = ({
                 variant="primary"
                 size="lg"
                 onClick={() => {
-                  setFeedback('Approved');
+                  setFeedback('Skip');
                   handleSubmit();
                 }}
                 disabled={isSubmitting}
                 icon={<CheckCircle2 size={18} />}
               >
-                Approve
+                Skit
               </Button>
             </div>
 
